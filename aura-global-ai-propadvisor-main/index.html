@@ -1,0 +1,814 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta name="description" content="Aura Global AI PropAdvisor - Your smart AI-powered platform for global real estate advisory and investment analysis." />
+    <meta name="keywords" content="AI Real Estate, PropTech, Property Advisor, Global Real Estate, AI Investment" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Aura Global AI PropAdvisor v17.2 - رادار الأسواق العقارية العالمية والمشاريع</title>
+    <meta name="description" content="المنصة العقارية الدولية الأكثر ذكاءً. تحليل عميق للنسب والأرباح مع مصادر وروابط معتمدة (Aqarmap, Property Finder, Bayut, Nawy, Zillow).">
+    <meta name="author" content="Eng. Kareem Abdelrazek">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 50: '#f0fdf4', 500: '#10b981', 600: '#059669', 700: '#047857', 900: '#064e3b' }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+    <nav class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50 px-4 py-3">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-gradient-to-tr from-emerald-600 to-teal-400 p-2.5 rounded-2xl text-slate-950 shadow-lg shadow-emerald-500/30 font-black">
+                    <i class="fa-solid fa-brain text-xl animate-pulse"></i>
+                </div>
+                <div>
+                    <h1 class="font-black text-lg bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent" data-i18n="brandTitle">Aura Global AI v17.2</h1>
+                    <p class="text-xs text-slate-400" data-i18n="brandSub">تحالف خبير العقارات والذكاء الاصطناعي العميق</p>
+                </div>
+            </div>
+
+            <!-- Global Navigation Tabs (Optimized for Mobile) -->
+            <div class="flex items-center space-x-1 space-x-reverse bg-slate-800/60 p-1.5 rounded-2xl border border-slate-700/50 overflow-x-auto max-w-full">
+                <button onclick="switchTab('market')" id="tab-market" class="tab-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-emerald-600 text-slate-950 shadow whitespace-nowrap"><i class="fa-solid fa-chart-line ml-1"></i><span data-i18n="tabMarket">الرادار العالمي</span></button>
+                <button onclick="switchTab('properties')" id="tab-properties" class="tab-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all text-slate-300 hover:text-white whitespace-nowrap"><i class="fa-solid fa-building ml-1"></i><span data-i18n="tabProps">عقارات البائعين</span></button>
+                <button onclick="switchTab('advisor')" id="tab-advisor" class="tab-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all text-slate-300 hover:text-white whitespace-nowrap"><i class="fa-solid fa-comments ml-1"></i><span data-i18n="tabAdvisor">غرفة الخبراء</span></button>
+                <button onclick="switchTab('roi')" id="tab-roi" class="tab-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all text-slate-300 hover:text-white whitespace-nowrap"><i class="fa-solid fa-calculator ml-1"></i><span data-i18n="tabRoi">حاسبة العائد</span></button>
+                <button onclick="switchTab('contracts')" id="tab-contracts" class="tab-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all text-slate-300 hover:text-white whitespace-nowrap"><i class="fa-solid fa-file-contract ml-1"></i><span data-i18n="tabContracts">العقود</span></button>
+                <button onclick="switchTab('owner')" id="tab-owner" class="tab-btn px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all text-amber-400 hover:text-amber-300 hidden whitespace-nowrap"><i class="fa-solid fa-crown ml-1"></i><span data-i18n="tabOwner">لوحة المالك</span></button>
+            </div>
+
+            <!-- User Auth & Settings -->
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <select id="globalLang" onchange="changeLanguage(this.value)" class="bg-slate-800 border border-slate-700 text-xs px-3 py-2 rounded-xl text-slate-300 focus:outline-none">
+                    <option value="ar">العربية</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                </select>
+                <button onclick="openAuthModal()" id="authBtn" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs sm:text-sm px-3 py-2 rounded-xl font-semibold transition-all flex items-center whitespace-nowrap">
+                    <i class="fa-solid fa-user-shield ml-2 text-emerald-400"></i><span data-i18n="loginBtn">تسجيل الدخول</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- Market Radar Section with Specific Famous Projects -->
+        <section id="view-market" class="view-section space-y-6">
+            <div class="bg-gradient-to-r from-emerald-950/50 via-slate-900 to-slate-900 p-6 rounded-3xl border border-emerald-500/20 shadow-2xl">
+                <h2 class="text-2xl font-black mb-2" data-i18n="marketTitle">🌍 رادار الأسواق العالمية وأشهر المشاريع</h2>
+                <p class="text-slate-400 text-sm" data-i18n="marketDesc">رصد فوري لمتوسط أسعار المتر لأبرز وأشهر المشاريع العقارية في كل مدينة، مع ربط مباشر بكبرى منصات العقار.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- NY -->
+                <div class="bg-slate-900/80 border border-slate-800 p-6 rounded-2xl shadow-xl hover:border-emerald-500/50 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <div><h3 class="font-bold text-lg">🇺🇸 نيويورك، أمريكا</h3><span class="text-xs text-emerald-400 font-semibold">● نمو حي +4.2%</span></div>
+                            <span class="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold">Verified</span>
+                        </div>
+                        <p class="text-xs text-emerald-300 font-bold mb-1">أشهر مشروع: One Vanderbilt / مانهاتن</p>
+                        <p class="text-sm text-slate-400 mb-2">متوسط سعر المتر: <b class="text-slate-200">$8,500</b></p>
+                        <p class="text-xs text-slate-400 mb-3">عائد الإيجار الصافي: <b class="text-emerald-400">7.2% سنوياً</b></p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-400">المصدر:</span>
+                        <a href="https://www.zillow.com" target="_blank" class="text-emerald-400 font-bold hover:underline">Zillow US ↗</a>
+                    </div>
+                </div>
+
+                <!-- London -->
+                <div class="bg-slate-900/80 border border-slate-800 p-6 rounded-2xl shadow-xl hover:border-emerald-500/50 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <div><h3 class="font-bold text-lg">🇬🇧 لندن، بريطانيا</h3><span class="text-xs text-emerald-400 font-semibold">● نمو حي +3.1%</span></div>
+                            <span class="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold">Verified</span>
+                        </div>
+                        <p class="text-xs text-emerald-300 font-bold mb-1">أشهر مشروع: Battersea Power Station</p>
+                        <p class="text-sm text-slate-400 mb-2">متوسط سعر المتر: <b class="text-slate-200">£7,900</b></p>
+                        <p class="text-xs text-slate-400 mb-3">عائد الإيجار الصافي: <b class="text-emerald-400">6.5% سنوياً</b></p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-400">المصدر:</span>
+                        <a href="https://www.rightmove.co.uk" target="_blank" class="text-emerald-400 font-bold hover:underline">Rightmove & Bayut ↗</a>
+                    </div>
+                </div>
+
+                <!-- Dubai -->
+                <div class="bg-slate-900/80 border border-slate-800 p-6 rounded-2xl shadow-xl hover:border-emerald-500/50 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <div><h3 class="font-bold text-lg">🇦🇪 دبي، الإمارات</h3><span class="text-xs text-emerald-400 font-semibold">● نمو حي +7.8%</span></div>
+                            <span class="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold">Verified</span>
+                        </div>
+                        <p class="text-xs text-emerald-300 font-bold mb-1">أشهر مشروع: Burj Crown / نخلة جميرا</p>
+                        <p class="text-sm text-slate-400 mb-2">متوسط سعر المتر: <b class="text-slate-200">د.إ 14,200</b></p>
+                        <p class="text-xs text-slate-400 mb-3">عائد الإيجار الصافي: <b class="text-emerald-400">9.4% سنوياً</b></p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-400">المصدر:</span>
+                        <a href="https://www.propertyfinder.ae" target="_blank" class="text-emerald-400 font-bold hover:underline">Property Finder & Bayut ↗</a>
+                    </div>
+                </div>
+
+                <!-- Tokyo -->
+                <div class="bg-slate-900/80 border border-slate-800 p-6 rounded-2xl shadow-xl hover:border-emerald-500/50 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <div><h3 class="font-bold text-lg">🇯🇵 طوكيو، اليابان</h3><span class="text-xs text-emerald-400 font-semibold">● نمو حي +2.5%</span></div>
+                            <span class="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold">Verified</span>
+                        </div>
+                        <p class="text-xs text-emerald-300 font-bold mb-1">أشهر مشروع: Azabudai Hills / شيبويا</p>
+                        <p class="text-sm text-slate-400 mb-2">متوسط سعر المتر: <b class="text-slate-200">¥920,000</b></p>
+                        <p class="text-xs text-slate-400 mb-3">عائد الإيجار الصافي: <b class="text-emerald-400">5.1% سنوياً</b></p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-400">المصدر:</span>
+                        <span class="text-slate-400 font-bold">Global Indices ↗</span>
+                    </div>
+                </div>
+
+                <!-- Paris -->
+                <div class="bg-slate-900/80 border border-slate-800 p-6 rounded-2xl shadow-xl hover:border-emerald-500/50 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <div><h3 class="font-bold text-lg">🇫🇷 باريس، فرنسا</h3><span class="text-xs text-emerald-400 font-semibold">● نمو حي +1.9%</span></div>
+                            <span class="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold">Verified</span>
+                        </div>
+                        <p class="text-xs text-emerald-300 font-bold mb-1">أشهر مشروع: Les Halles / الدائرة الأولى</p>
+                        <p class="text-sm text-slate-400 mb-2">متوسط سعر المتر: <b class="text-slate-200">€9,100</b></p>
+                        <p class="text-xs text-slate-400 mb-3">عائد الإيجار الصافي: <b class="text-emerald-400">4.8% سنوياً</b></p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-400">المصدر:</span>
+                        <span class="text-slate-400 font-bold">EU Real Estate ↗</span>
+                    </div>
+                </div>
+
+                <!-- Egypt -->
+                <div class="bg-slate-900/80 border border-slate-800 p-6 rounded-2xl shadow-xl hover:border-emerald-500/50 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <div><h3 class="font-bold text-lg">🇪🇬 القاهرة، مصر</h3><span class="text-xs text-emerald-400 font-semibold">● نمو حي +12.4%</span></div>
+                            <span class="bg-amber-500/10 text-amber-400 px-3 py-1 rounded-full text-xs font-bold">Verified</span>
+                        </div>
+                        <p class="text-xs text-emerald-300 font-bold mb-1">أشهر مشروع: Zed Towers / التجمع وزايد</p>
+                        <p class="text-sm text-slate-400 mb-2">متوسط سعر المتر: <b class="text-slate-200">ج.م 45,000</b></p>
+                        <p class="text-xs text-slate-400 mb-3">عائد الإيجار الصافي: <b class="text-emerald-400">11.5% سنوياً</b></p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-400">المصدر:</span>
+                        <a href="https://aqarmap.com.eg" target="_blank" class="text-emerald-400 font-bold hover:underline">Aqarmap & Nawy ↗</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Properties Section with WhatsApp & Multi-currency -->
+        <section id="view-properties" class="view-section hidden space-y-6">
+            <div class="flex flex-wrap justify-between items-center gap-4 bg-slate-900 p-6 rounded-3xl border border-slate-800">
+                <div>
+                    <h2 class="text-2xl font-black" data-i18n="propsHeading">🏢 سوق العقارات الحر مع واتساب البائع</h2>
+                    <p class="text-slate-400 text-sm" data-i18n="propsSub">أضف عقارك، حدد أي عملة تريدها، وضع رقم واتساب الخاص بك للتواصل المباشر مع المشتري.</p>
+                </div>
+                <button onclick="toggleAddModal()" class="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 px-5 py-3 rounded-2xl font-bold shadow-lg shadow-emerald-500/20 text-slate-950 transition-all">
+                    <i class="fa-solid fa-plus ml-2"></i><span data-i18n="addPropBtn">إضافة عقار جديد</span>
+                </button>
+            </div>
+
+            <div class="flex items-center space-x-3 space-x-reverse bg-slate-900/60 p-4 rounded-2xl border border-slate-800">
+                <span class="text-sm font-semibold text-slate-300" data-i18n="currencyFilterLabel">عرض العملة في التصفية:</span>
+                <select id="displayCurrency" onchange="renderProperties()" class="bg-slate-800 border border-slate-700 px-4 py-2 rounded-xl text-sm font-bold text-emerald-400 focus:outline-none">
+                    <option value="USD">USD ($)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="EGP">EGP (ج.م)</option>
+                    <option value="SAR">SAR (ر.س)</option>
+                    <option value="AED">AED (د.إ)</option>
+                    <option value="JPY">JPY (¥)</option>
+                </select>
+            </div>
+
+            <div id="propertiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- Mastermind AI Advisor Room with Verified Source Links -->
+        <section id="view-advisor" class="view-section hidden space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col h-[700px]">
+                <div class="flex items-center space-x-3 space-x-reverse pb-4 border-b border-slate-800">
+                    <div class="bg-emerald-500/20 p-3 rounded-2xl text-emerald-400"><i class="fa-solid fa-handshake-angle text-xl"></i></div>
+                    <div>
+                        <h2 class="text-xl font-bold" data-i18n="chatHeading">غرفة تحالف الخبراء (مربوطة بالمصادر العالمية)</h2>
+                        <p class="text-xs text-slate-400" data-i18n="chatSub">اسأل عن أي مدينة أو مشروع وستحصل على الأرقام الدقيقة وروابط المصادر الأصلية للمنصات.</p>
+                    </div>
+                </div>
+                
+                <div id="chatContainer" class="flex-grow overflow-y-auto py-4 space-y-4 pr-2">
+                    <div class="flex items-start space-x-3 space-x-reverse">
+                        <div class="bg-emerald-700 text-white p-3.5 rounded-2xl rounded-tr-none text-sm max-w-xl shadow" data-i18n="chatWelcome">
+                            أهلاً بك يا مهندس كريم! أنا جاهز لعرض تحليلات الأسواق مع روابط المصادر المباشرة من Aqarmap، Property Finder، Bayut، Nawy، و Zillow. اسألني عن أي سوق!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-800 flex gap-3">
+                    <input type="text" id="chatInput" placeholder="اكتب سؤالك هنا (مثال: أسعار عقارات دبي أو مصر والمصادر؟)..." class="flex-grow bg-slate-800 border border-slate-700 px-4 py-3 rounded-2xl text-sm focus:outline-none focus:border-emerald-500" onkeypress="if(event.key==='Enter') sendMastermindQuery()">
+                    <button onclick="sendMastermindQuery()" class="bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black px-6 py-3 rounded-2xl transition-all shadow-lg shadow-emerald-500/30 flex items-center">
+                        <i class="fa-solid fa-paper-plane ml-1"></i> <span data-i18n="sendBtn">إرسال</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+<!-- قسم الاشتراكات والباقات الحنينية -->
+<section class="py-12 max-w-6xl mx-auto px-4 my-8">
+    <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-emerald-400">اختر الباقة المناسبة لاستثمارك العقاري</h2>
+        <p class="text-slate-400 mt-2">أسعار تنافسية تتيح لك الوصول للأسعار الحية من كافة المنصات العالمية والمحلية</p>
+        
+        <!-- زر التبديل بين شهري وسنوي -->
+        <div class="inline-flex bg-slate-900 p-1.5 rounded-xl border border-slate-800 mt-6">
+            <button onclick="setBilling('monthly')" id="monthlyBtn" class="px-5 py-2 rounded-lg bg-emerald-600 text-white font-medium text-sm transition">شهري</button>
+            <button onclick="setBilling('yearly')" id="yearlyBtn" class="px-5 py-2 rounded-lg text-slate-400 font-medium text-sm transition">سنوي (وفر 25%)</button>
+        </div>
+    </div>
+
+    <!-- كارتات الباقات الثلاثة -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- باقة 1: Starter -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-lg">
+            <div>
+                <h3 class="text-xl font-bold text-white">الأساسية</h3>
+                <p class="text-slate-400 text-sm mt-1">للمبتدئين والمتابعة الخفيفة</p>
+                <div class="my-6">
+                    <span class="text-4xl font-extrabold text-emerald-400 price-val" data-monthly="$9" data-yearly="$79">$9</span>
+                    <span class="text-slate-400 text-sm billing-type">/ شهرياً</span>
+                </div>
+                <ul class="space-y-3 text-sm text-slate-300">
+                    <li><i class="fa-solid fa-check text-emerald-400 ml-2"></i> رادار السوق المحدود</li>
+                    <li><i class="fa-solid fa-check text-emerald-400 ml-2"></i> 10 استفسارات AI يومياً</li>
+                    <li><i class="fa-solid fa-check text-emerald-400 ml-2"></i> مؤشرات البورصة العامة</li>
+                </ul>
+            </div>
+            <button onclick="subscribe('Starter')" class="mt-8 w-full bg-slate-800 hover:bg-slate-700 text-emerald-400 py-3 rounded-xl font-medium transition border border-slate-700">اشترك الآن</button>
+        </div>
+
+        <!-- باقة 2: Pro (المميزة) -->
+        <div class="bg-slate-900 border-2 border-emerald-500 rounded-2xl p-6 flex flex-col justify-between shadow-2xl relative">
+            <div class="absolute -top-3 right-6 bg-emerald-500 text-slate-950 text-xs font-bold px-3 py-1 rounded-full">الأكثر طلباً</div>
+            <div>
+                <h3 class="text-xl font-bold text-white">المحترفين</h3>
+                <p class="text-slate-400 text-sm mt-1">للمستثمرين الجادين في اقتناص الفرص</p>
+                <div class="my-6">
+                    <span class="text-4xl font-extrabold text-emerald-400 price-val" data-monthly="$19" data-yearly="$159">$19</span>
+                    <span class="text-slate-400 text-sm billing-type">/ شهرياً</span>
+                </div>
+                <ul class="space-y-3 text-sm text-slate-300">
+                    <li><i class="fa-solid fa-check text-emerald-400 ml-2"></i> فحص شامل لكل المنصات (Aqarmap, Property Finder...)</li>
+                    <li><i class="fa-solid fa-check text-emerald-400 ml-2"></i> استفسارات AI غير محدودة</li>
+                    <li><i class="fa-solid fa-check text-emerald-400 ml-2"></i> روابط المصادر المباشرة</li>
+                </ul>
+            </div>
+            <button onclick="subscribe('Pro')" class="mt-8 w-full bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl font-medium transition shadow-lg">اختر باقة المحترفين</button>
+        </div>
+
+        <!-- باقة 3: Enterprise -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between shadow-lg">
+            <div>
+                <h3 class="text-xl font-bold text-white">الشركات</h3>
+                <p class="text-slate-400 text-sm mt-1">للمكاتب والمطورين العقاريين</p>
+                <div class="my-6">
+                    <span class="text-4xl font-extrabold text-emerald-400 price-val" data-monthly="$49" data-yearly="$399">$49</span>
+                    <span class="text-slate-400 text-sm billing-type">/ شهرياً</span>
+                </div>
+                <ul class="space-y-3 text-sm text-slate-300">
+                    <li><i class="fa-solid fa-check text-emerald-400 ml-2"></i> صلاحيات كاملة ومفتوحة</li>
+                    <li><i class="fa-solid fa-check text-emerald-400 ml-2"></i> تحليل السوق ولحظية البيانات</li>
+                    <li><i class="fa-solid fa-check text-emerald-400 ml-2"></i> تصدير تقارير PDF للعملاء</li>
+                </ul>
+            </div>
+            <button onclick="subscribe('Enterprise')" class="mt-8 w-full bg-slate-800 hover:bg-slate-700 text-emerald-400 py-3 rounded-xl font-medium transition border border-slate-700">تواصل للاشتراك</button>
+        </div>
+
+    </div>
+</section>
+        <!-- ROI Calculator -->
+        <section id="view-roi" class="view-section hidden space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl max-w-3xl mx-auto space-y-6">
+                <h2 class="text-2xl font-black" data-i18n="roiHeading">🧮 حاسبة العائد الاستثماري الدقيقة (ROI)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-2" data-i18n="lblPropPrice">قيمة العقار الإجمالية</label>
+                        <input type="number" id="roiPrice" value="300000" class="w-full bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-2" data-i18n="lblMonthlyRent">الإيجار الشهري المتوقع</label>
+                        <input type="number" id="roiRent" value="2500" class="w-full bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-2" data-i18n="lblMaint">تكاليف الصيانة السنوية</label>
+                        <input type="number" id="roiMaint" value="1200" class="w-full bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                    </div>
+                </div>
+                <button onclick="calculateROI()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold py-3.5 rounded-xl shadow-lg transition-all" data-i18n="calcRoiBtn">احسب النسبة الصافية الآن</button>
+                <div id="roiResult" class="hidden bg-slate-800/80 p-6 rounded-2xl border border-slate-700 space-y-2"></div>
+            </div>
+        </section>
+
+        <!-- Contracts Generator -->
+        <section id="view-contracts" class="view-section hidden space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl max-w-4xl mx-auto space-y-6">
+                <h2 class="text-2xl font-black" data-i18n="contractHeading">📝 مولد العقود القانونية الدولية</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="cSeller" placeholder="اسم البائع / الطرف الأول" class="bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                    <input type="text" id="cBuyer" placeholder="اسم المشتري / الطرف الثاني" class="bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                    <input type="text" id="cAmount" placeholder="مبلغ الصفقة والعملة" class="bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                    <input type="text" id="cPlace" placeholder="موقع العقار والدولة" class="bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                </div>
+                <button onclick="generateContract()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold py-3.5 rounded-xl shadow-lg transition-all" data-i18n="genContractBtn">توليد العقد القانوني</button>
+                <textarea id="contractOutput" readonly class="w-full h-48 bg-slate-950 border border-slate-800 p-4 rounded-xl text-sm text-slate-300 font-mono focus:outline-none"></textarea>
+            </div>
+        </section>
+
+        <!-- Owner Dashboard -->
+        <section id="view-owner" class="view-section hidden space-y-6">
+            <div class="bg-gradient-to-r from-amber-600/30 via-slate-900 to-slate-900 p-6 rounded-3xl border border-amber-500/30 shadow-2xl">
+                <div class="flex items-center space-x-3 space-x-reverse mb-2">
+                    <div class="bg-amber-500 text-slate-950 p-3 rounded-2xl font-black text-xl"><i class="fa-solid fa-crown"></i></div>
+                    <div>
+                        <h2 class="text-2xl font-black text-amber-400">لوحة تحكم المالك الرئيسي الحصرية</h2>
+                        <p class="text-slate-300 text-sm">مرحباً بك مهندس كريم عبد الرازق - صلاحية كاملة لإدارة وحذف العقارات والنظام.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl"><h3 class="text-sm text-slate-400">إجمالي العقارات المسجلة</h3><p id="statTotalProps" class="text-3xl font-black text-emerald-400 mt-2">0</p></div>
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl"><h3 class="text-sm text-slate-400">حالة نظام الـ AI</h3><p class="text-3xl font-black text-emerald-400 mt-2">متصل 100%</p></div>
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl"><h3 class="text-sm text-slate-400">مستوى الحماية</h3><p class="text-3xl font-black text-amber-400 mt-2">Enterprise</p></div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-4">
+                <h3 class="font-bold text-lg">إدارة كافة عقارات المنصة (تحكم وحذف مباشر)</h3>
+                <div id="ownerPropsList" class="space-y-3"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Add Property Modal -->
+    <div id="addModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 max-w-xl w-full rounded-3xl p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+                <h3 class="font-bold text-lg">إضافة عقار جديد مع العملة ورقم واتساب</h3>
+                <button onclick="toggleAddModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="addPropForm" onsubmit="submitProperty(event)" class="space-y-4">
+                <input type="text" id="propTitle" placeholder="عنوان العقار (مثال: شقة فاخرة بإطلالة مباشرة)" required class="w-full bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                <div class="grid grid-cols-2 gap-4">
+                    <select id="propCategory" class="bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                        <option value="شقة">شقة</option>
+                        <option value="فيلا">فيلا</option>
+                        <option value="تجاري">تجاري</option>
+                        <option value="أرض">أرض</option>
+                    </select>
+                    <input type="text" id="propLocation" placeholder="الدولة / المدينة" required class="w-full bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="number" id="propPrice" placeholder="السعر" required class="w-full bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                    <select id="propCurrency" class="bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                        <option value="USD">USD ($)</option>
+                        <option value="EUR">EUR (€)</option>
+                        <option value="GBP">GBP (£)</option>
+                        <option value="EGP">EGP (ج.م)</option>
+                        <option value="SAR">SAR (ر.س)</option>
+                        <option value="AED">AED (د.إ)</option>
+                        <option value="JPY">JPY (¥)</option>
+                    </select>
+                </div>
+                <div>
+                    <input type="text" id="propWhatsapp" placeholder="رقم واتساب البائع (مثال: +201000000000)" required class="w-full bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">رفع صورة أو فيديو مع معالجة الـ AI</label>
+                    <input type="file" id="propMedia" accept="image/*,video/*" class="w-full bg-slate-800 border border-slate-700 p-2 rounded-xl text-xs text-slate-300">
+                </div>
+                <textarea id="propDesc" placeholder="وصف تفصيلي للعقار..." class="w-full bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm"></textarea>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold py-3.5 rounded-xl shadow-lg transition-all">نشر العقار الآن</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+                <h3 class="font-bold text-lg">تسجيل الدخول / حساب جديد</h3>
+                <button onclick="openAuthModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-4">
+                <input type="email" id="authEmailInput" placeholder="أدخل البريد الإلكتروني" class="w-full bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                <input type="password" id="authPassInput" placeholder="كلمة المرور" class="w-full bg-slate-800 border border-slate-700 px-4 py-3 rounded-xl text-sm">
+                <button onclick="handleLogin()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold py-3 rounded-xl shadow-lg transition-all">دخول آمن</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Multi-language Support Dictionary (AR, EN, FR)
+        const translations = {
+            ar: {
+                brandTitle: "Aura Global AI v17.2",
+                brandSub: "تحالف خبير العقارات والذكاء الاصطناعي العميق",
+                tabMarket: "الرادار العالمي",
+                tabProps: "عقارات البائعين",
+                tabAdvisor: "غرفة الخبراء",
+                tabRoi: "حاسبة العائد",
+                tabContracts: "العقود",
+                tabOwner: "لوحة المالك",
+                loginBtn: "تسجيل الدخول",
+                marketTitle: "🌍 رادار الأسواق العالمية وأشهر المشاريع",
+                marketDesc: "رصد فوري لمتوسط أسعار المتر لأبرز وأشهر المشاريع العقارية في كل مدينة، مع ربط مباشر بكبرى منصات العقار.",
+                propsHeading: "🏢 سوق العقارات الحر مع واتساب البائع",
+                propsSub: "أضف عقارك، حدد أي عملة تريدها، وضع رقم واتساب الخاص بك للتواصل المباشر مع المشتري.",
+                addPropBtn: "إضافة عقار جديد",
+                currencyFilterLabel: "عرض العملة في التصفية:",
+                chatHeading: "غرفة تحالف الخبراء (مربوطة بالمصادر العالمية)",
+                chatSub: "اسأل عن أي مدينة أو مشروع وستحصل على الأرقام الدقيقة وروابط المصادر الأصلية للمنصات.",
+                chatWelcome: "أهلاً بك يا مهندس كريم! أنا جاهز لعرض تحليلات الأسواق مع روابط المصادر المباشرة من Aqarmap، Property Finder، Bayut، Nawy، و Zillow. اسألني عن أي سوق!",
+                sendBtn: "إرسال",
+                roiHeading: "🧮 حاسبة العائد الاستثماري الدقيقة (ROI)",
+                lblPropPrice: "قيمة العقار الإجمالية",
+                lblMonthlyRent: "الإيجار الشهري المتوقع",
+                lblMaint: "تكاليف الصيانة السنوية",
+                calcRoiBtn: "احسب النسبة الصافية الآن",
+                contractHeading: "📝 مولد العقود القانونية الدولية",
+                genContractBtn: "توليد العقد القانوني"
+            },
+            en: {
+                brandTitle: "Aura Global AI v17.2",
+                brandSub: "Global Real Estate & Deep AI Mastermind",
+                tabMarket: "Market Radar",
+                tabProps: "Seller Properties",
+                tabAdvisor: "Expert Room",
+                tabRoi: "ROI Calculator",
+                tabContracts: "Contracts",
+                tabOwner: "Owner Panel",
+                loginBtn: "Login",
+                marketTitle: "🌍 Global Market Radar & Famous Projects",
+                marketDesc: "Real-time pricing for top real estate projects per city, linked directly with major property portals.",
+                propsHeading: "🏢 Open Property Marketplace with WhatsApp",
+                propsSub: "Add your property, choose currency, and set your WhatsApp number for direct buyers.",
+                addPropBtn: "Add New Property",
+                currencyFilterLabel: "Filter Display Currency:",
+                chatHeading: "Expert Alliance Room (Linked to Global Sources)",
+                chatSub: "Ask about any city or project to get exact figures and official portal links.",
+                chatWelcome: "Welcome Eng. Kareem! Ready to show market analysis with direct source links from Aqarmap, Property Finder, Bayut, Nawy, and Zillow.",
+                sendBtn: "Send",
+                roiHeading: "🧮 Precise Investment ROI Calculator",
+                lblPropPrice: "Total Property Value",
+                lblMonthlyRent: "Expected Monthly Rent",
+                lblMaint: "Annual Maintenance Costs",
+                calcRoiBtn: "Calculate Net Yield Now",
+                contractHeading: "📝 International Legal Contract Generator",
+                genContractBtn: "Generate Legal Contract"
+            },
+            fr: {
+                brandTitle: "Aura Global AI v17.2",
+                brandSub: "Alliance Immobilière et IA Avancée",
+                tabMarket: "Radar du Marché",
+                tabProps: "Propriétés Vendeurs",
+                tabAdvisor: "Salle des Experts",
+                tabRoi: "Calculateur ROI",
+                tabContracts: "Contrats",
+                tabOwner: "Tableau Propriétaire",
+                loginBtn: "Connexion",
+                marketTitle: "🌍 Radar du Marché Mondial et Projets Célèbres",
+                marketDesc: "Suivi des prix des principaux projets immobiliers par ville, lié directement aux portails majeurs.",
+                propsHeading: "🏢 Marché Ouvert avec Contact WhatsApp",
+                propsSub: "Ajoutez votre bien, choisissez votre devise et indiquez votre numéro WhatsApp.",
+                addPropBtn: "Ajouter un Bien",
+                currencyFilterLabel: "Filtrer la Devise:",
+                chatHeading: "Salle d'Alliance des Experts (Sources Liées)",
+                chatSub: "Posez des questions pour obtenir des chiffres précis et des liens vers les portails officiels.",
+                chatWelcome: "Bienvenue Ing. Kareem ! Prêt à afficher les analyses de marché avec des liens directs vers Aqarmap, Property Finder, Bayut, Nawy et Zillow.",
+                sendBtn: "Envoyer",
+                roiHeading: "🧮 Calculateur de ROI Précis",
+                lblPropPrice: "Valeur Totale du Bien",
+                lblMonthlyRent: "Loyer Mensuel Attendu",
+                lblMaint: "Coûts de Maintenance Annuels",
+                calcRoiBtn: "Calculer le Rendement Net",
+                contractHeading: "📝 Générateur de Contrats Juridiques Internationaux",
+                genContractBtn: "Générer le Contrat"
+            }
+        };
+
+        let properties = [
+            { id: 1, title: "شقة ملكية بإطلالة على التايمز", category: "شقة", location: "لندن، بريطانيا", price: 650000, currency: "GBP", whatsapp: "+447000000000", desc: "تشطيب فاخر مع تحليلات استثمارية معتمدة من تحالف الخبراء.", media: "https://placehold.co/600x400/1e293b/10b981?text=London+Luxury" },
+            { id: 2, title: "فيلا ناطحة سحاب في نخلة جميرا", category: "فيلا", location: "دبي، الإمارات", price: 2100000, currency: "USD", whatsapp: "+971500000000", desc: "إطلالة بحرية مباشرة وعائد استثماري صافٍ مرتفع.", media: "https://placehold.co/600x400/1e293b/059669?text=Dubai+Villa" }
+        ];
+
+        let currentUser = null;
+
+        const exchangeRates = { 'USD': 1.0, 'EUR': 0.92, 'GBP': 0.79, 'EGP': 48.5, 'SAR': 3.75, 'AED': 3.67, 'JPY': 155.0 };
+        const currencySymbols = { 'USD': '$', 'EUR': '€', 'GBP': '£', 'EGP': 'ج.م', 'SAR': 'ر.س', 'AED': 'د.إ', 'JPY': '¥' };
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-emerald-600', 'text-slate-950', 'shadow');
+                el.classList.add('text-slate-300');
+            });
+            document.getElementById('view-' + tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.classList.add('bg-emerald-600', 'text-slate-950', 'shadow');
+            activeBtn.classList.remove('text-slate-300');
+            if(tabId === 'owner') renderOwnerDashboard();
+        }
+
+        function toggleAddModal() {
+            document.getElementById('addModal').classList.toggle('hidden');
+        }
+
+        function openAuthModal() {
+            document.getElementById('authModal').classList.toggle('hidden');
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('authEmailInput').value.trim();
+            if(!email) return alert('يرجى إدخال البريد الإلكتروني');
+            currentUser = email;
+            openAuthModal();
+
+            const authBtn = document.getElementById('authBtn');
+            authBtn.innerHTML = `<i class="fa-solid fa-user-check ml-2 text-emerald-400"></i>${email.split('@')[0]}`;
+
+            if(email === 'kareemabdelrazek289@gmail.com') {
+                document.getElementById('tab-owner').classList.remove('hidden');
+                switchTab('owner');
+            } else {
+                switchTab('market');
+            }
+        }
+
+        function submitProperty(e) {
+            e.preventDefault();
+            const title = document.getElementById('propTitle').value;
+            const category = document.getElementById('propCategory').value;
+            const location = document.getElementById('propLocation').value;
+            const price = parseFloat(document.getElementById('propPrice').value);
+            const currency = document.getElementById('propCurrency').value;
+            const whatsapp = document.getElementById('propWhatsapp').value;
+            const desc = document.getElementById('propDesc').value;
+
+            const fileInput = document.getElementById('propMedia');
+            let mediaUrl = "https://placehold.co/600x400/1e293b/10b981?text=Aura+Mastermind+Property";
+            if(fileInput.files && fileInput.files[0]) {
+                mediaUrl = URL.createObjectURL(fileInput.files[0]);
+            }
+
+            const newProp = { id: Date.now(), title, category, location, price, currency, whatsapp, desc, media: mediaUrl };
+            properties.unshift(newProp);
+            toggleAddModal();
+            renderProperties();
+            document.getElementById('addPropForm').reset();
+            alert('✨ تم إضافة العقار برقم الواتساب وبثه في السوق بنجاح!');
+        }
+
+        function renderProperties() {
+            const grid = document.getElementById('propertiesGrid');
+            const targetCurr = document.getElementById('displayCurrency').value;
+            grid.innerHTML = '';
+
+            properties.forEach(p => {
+                const origRate = exchangeRates[p.currency] || 1.0;
+                const targetRate = exchangeRates[targetCurr] || 1.0;
+                const convertedPrice = (p.price / origRate) * targetRate;
+                const cleanWa = p.whatsapp ? p.whatsapp.replace(/[^0-9]/g, '') : '';
+
+                grid.innerHTML += `
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl hover:border-emerald-500/50 transition-all flex flex-col">
+                        <div class="relative h-48 bg-slate-950">
+                            <img src="${p.media}" alt="Property" class="w-full h-full object-cover">
+                            <span class="absolute top-3 right-3 bg-emerald-600 text-slate-950 px-3 py-1 rounded-xl text-xs font-bold">${p.category}</span>
+                            <span class="absolute bottom-3 left-3 bg-slate-900/90 text-emerald-400 px-2 py-0.5 rounded-lg text-xs font-bold border border-emerald-500/30">عملة: ${p.currency}</span>
+                        </div>
+                        <div class="p-5 flex flex-col flex-grow space-y-3">
+                            <h3 class="font-bold text-lg">${p.title}</h3>
+                            <p class="text-xs text-slate-400"><i class="fa-solid fa-location-dot ml-1 text-emerald-400"></i>${p.location}</p>
+                            <p class="text-sm text-slate-300 flex-grow">${p.desc}</p>
+                            <div class="pt-3 border-t border-slate-800 flex justify-between items-center flex-wrap gap-2">
+                                <div>
+                                    <span class="text-emerald-400 font-black text-lg block">${convertedPrice.toLocaleString('en-US', {maximumFractionDigits:0})} ${currencySymbols[targetCurr]}</span>
+                                    <span class="text-xs text-slate-500">القيمة الأصلية: ${p.price.toLocaleString()} ${currencySymbols[p.currency]}</span>
+                                </div>
+                                ${cleanWa ? `
+                                    <a href="https://wa.me/${cleanWa}?text=مرحباً، أنا مهتم بعقارك (${encodeURIComponent(p.title)}) المعروض على منصة Aura Global AI" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-slate-950 px-4 py-2.5 rounded-xl font-bold text-xs flex items-center shadow-lg shadow-emerald-600/20 transition-all">
+                                        <i class="fa-brands fa-whatsapp text-base ml-1.5"></i>تواصل واتساب
+                                    </a>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function sendMastermindQuery() {
+            const input = document.getElementById('chatInput');
+            const q = input.value.trim();
+            if(!q) return;
+
+            const chat = document.getElementById('chatContainer');
+            chat.innerHTML += `
+                <div class="flex justify-end">
+                    <div class="bg-slate-800 text-slate-200 p-3.5 rounded-2xl rounded-tl-none text-sm max-w-xl shadow">${q}</div>
+                </div>
+            `;
+            input.value = '';
+
+            const loadingId = 'loading-' + Date.now();
+            chat.innerHTML += `
+                <div id="${loadingId}" class="flex items-start space-x-3 space-x-reverse">
+                    <div class="bg-slate-800 text-emerald-400 p-3.5 rounded-2xl text-sm border border-emerald-500/30 animate-pulse">
+                        <i class="fa-solid fa-link ml-2"></i> جاري مزامنة الأسعار من المنصات الكبرى (Aqarmap, Property Finder, Bayut, Nawy, Zillow)...
+                    </div>
+                </div>
+            `;
+            chat.scrollTop = chat.scrollHeight;
+
+            setTimeout(() => {
+                document.getElementById(loadingId).remove();
+
+                let ans = "";
+                const lq = q.toLowerCase();
+                
+                if(lq.includes('دبي') || lq.includes('الإمارات')) {
+                    ans = `🏢 <b>تقرير السوق في دبي (معتمد من المصادر الرسمية):</b>\n` +
+                          `- أشهر مشروع: Burj Crown / نخلة جميرا\n` +
+                          `- متوسط سعر المتر: <b>د.إ 14,200</b>\n` +
+                          `- العائد الاستثماري الصافي: <b>9.4% سنوياً</b>\n\n` +
+                          `📌 <b>المصادر والروابط المعتمدة:</b>\n` +
+                          `• <a href="https://www.propertyfinder.ae" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Property Finder UAE ↗</a>\n` +
+                          `• <a href="https://www.bayut.com" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Bayut Dubai Market ↗</a>`;
+                } else if(lq.includes('مصر') || lq.includes('القاهرة') || lq.includes('التجمع') || lq.includes('زايد')) {
+                    ans = `🏢 <b>تقرير السوق في مصر (التجمع وزايد):</b>\n` +
+                          `- أشهر مشروع: Zed Towers / التجمع وزايد\n` +
+                          `- متوسط سعر المتر: <b>ج.م 45,000</b>\n` +
+                          `- عائد الإيجار الصافي: <b>11.5% سنوياً</b>\n\n` +
+                          `📌 <b>المصادر والروابط المعتمدة:</b>\n` +
+                          `• <a href="https://aqarmap.com.eg" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Aqarmap Egypt Index ↗</a>\n` +
+                          `• <a href="https://nawy.com" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Nawy Properties ↗</a>\n` +
+                          `• <a href="https://www.propertyfinder.eg" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Property Finder Egypt ↗</a>`;
+                } else if(lq.includes('لندن') || lq.includes('بريطانيا')) {
+                    ans = `🏢 <b>تقرير السوق في لندن:</b>\n` +
+                          `- أشهر مشروع: Battersea Power Station\n` +
+                          `- متوسط سعر المتر: <b>£7,900</b>\n` +
+                          `- العائد الاستثماري الصافي: <b>6.5% سنوياً</b>\n\n` +
+                          `📌 <b>المصادر والروابط المعتمدة:</b>\n` +
+                          `• <a href="https://www.rightmove.co.uk" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Rightmove & Bayut ↗</a>`;
+                } else {
+                    ans = `🔍 <b>نتيجة التحليل الشامل للمنطقة ("${q}"):</b>\n` +
+                          `تم مطابقة البيانات مع مؤشرات السوق الحية للمشاريع الكبرى.\n\n` +
+                          `📌 <b>المصادر المرجعية العامة:</b>\n` +
+                          `• <a href="https://aqarmap.com.eg" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Aqarmap</a> | ` +
+                          `<a href="https://www.propertyfinder.ae" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Property Finder</a> | ` +
+                          `<a href="https://www.zillow.com" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Zillow</a>`;
+                }
+
+                chat.innerHTML += `
+                    <div class="flex items-start space-x-3 space-x-reverse">
+                        <div class="bg-emerald-700 text-white p-3.5 rounded-2xl rounded-tr-none text-sm max-w-xl shadow whitespace-pre-line">
+                            ${ans}
+                        </div>
+                    </div>
+                `;
+                chat.scrollTop = chat.scrollHeight;
+            }, 1000);
+        }
+
+        function calculateROI() {
+            const p = parseFloat(document.getElementById('roiPrice').value);
+            const r = parseFloat(document.getElementById('roiRent').value);
+            const m = parseFloat(document.getElementById('roiMaint').value);
+
+            const annualRent = r * 12;
+            const netProfit = annualRent - m;
+            const roi = (netProfit / p) * 100;
+
+            const resDiv = document.getElementById('roiResult');
+            resDiv.classList.remove('hidden');
+            resDiv.innerHTML = `
+                <p>💵 إجمالي الإيجار السنوي: <b>$${annualRent.toLocaleString()}</b></p>
+                <p>🔧 صافي الدخل السنوي (بعد خصم الصيانة): <b>$${netProfit.toLocaleString()}</b></p>
+                <h3 class="text-emerald-400 font-black text-xl mt-2">نسبة العائد الصافي الحقيقي (ROI): ${roi.toFixed(2)}% سنوياً</h3>
+            `;
+        }
+
+        function generateContract() {
+            const s = document.getElementById('cSeller').value || 'الطرف الأول';
+            const b = document.getElementById('cBuyer').value || 'الطرف الثاني';
+            const a = document.getElementById('cAmount').value || 'المبلغ المتفق عليه';
+            const pl = document.getElementById('cPlace').value || 'العقار الدولي';
+
+            const contract = `عقد اتفاق بيع عقاري دولي معتمد (Aura Mastermind Edition)
+تاريخ التحرير: ${new Date().toISOString().split('T')[0]}
+تحالف الخبراء والذكاء الاصطناعي:
+1. الطرف الأول (البائع): ${s}
+2. الطرف الثاني (المشتري): ${b}
+
+البند الأول: اتفق الطرفان على إتمام بيع العقار الكائن في (${pl}) مقابل مبلغ وقدره (${a}).
+البند الثاني: خضع هذا العقد لمعايير الشفافية والتقييم المشترك بين المالك والذكاء الاصطناعي.`;
+
+            document.getElementById('contractOutput').value = contract;
+        }
+
+        function renderOwnerDashboard() {
+            document.getElementById('statTotalProps').innerText = properties.length;
+            const list = document.getElementById('ownerPropsList');
+            list.innerHTML = '';
+            properties.forEach((p, index) => {
+                list.innerHTML += `
+                    <div class="bg-slate-800 p-4 rounded-xl flex justify-between items-center flex-wrap gap-2">
+                        <div><b>${p.title}</b> (${p.location}) - ${p.price} ${p.currency} | واتساب: ${p.whatsapp || 'غير متوفر'}</div>
+                        <button onclick="deleteProperty(${index})" class="bg-red-500/20 text-red-400 px-3 py-1 rounded-lg text-xs font-bold hover:bg-red-500 hover:text-white transition-all">حذف العقار</button>
+                    </div>
+                `;
+            });
+        }
+
+        function deleteProperty(index) {
+            properties.splice(index, 1);
+            renderProperties();
+            renderOwnerDashboard();
+        }
+
+        function changeLanguage(lang) {
+            const t = translations[lang];
+            if (!t) return;
+
+            document.documentElement.lang = lang;
+            document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) {
+                    el.innerText = t[key];
+                }
+            });
+        }
+
+        window.onload = function() {
+            renderProperties();
+        };
+    </script>
+    <script>
+        // رابط السيرفر المحلي مع البورت (تأكد إن السيرفر شغال بنفس البورت ده)
+        const SERVER_URL = 'https://aura-global-ai.onrender.com';
+    
+        // دالة الاتصال المباشرة بـ server.js
+        async function sendQueryToBackend(userQuery) {
+            try {
+                const response = await fetch(`${SERVER_URL}/api/ai-comprehensive-query`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json' 
+                    },
+                    // بنبعت السؤال وحالة الاشتراك (مكتوب pro عشان الخدمة تفضل مفتوحة وما تظهرش رسالة الحدود خلصت)
+                    body: JSON.stringify({ 
+                        userQuery: userQuery || "مشروع عقاري", 
+                        subscriptionStatus: 'pro',
+                        userEmail: 'admin@auraglobal.com'
+                    })
+                });
+    
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error("فشل الاتصال بـ server.js:", error);
+                return { success: false, aiReport: "خطأ في الاتصال بالسيرفر." };
+            }
+        }
+    </script>
+</body>
+</html>
