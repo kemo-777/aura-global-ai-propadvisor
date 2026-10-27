@@ -1,6 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl" class="dark">
 <head>
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="description" content="Aura Global AI PropAdvisor - Your smart AI-powered platform for global real estate advisory and investment analysis." />
     <meta name="keywords" content="AI Real Estate, PropTech, Property Advisor, Global Real Estate, AI Investment" />
     <meta charset="UTF-8">
@@ -93,7 +94,7 @@
                     </div>
                     <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
                         <span class="text-slate-400">المصدر:</span>
-                        <a href="https://www.zillow.com" target="_blank" class="text-emerald-400 font-bold hover:underline">Zillow US ↗</a>
+                        <a href="https://www.zillow.com" target="_blank" class="text-emerald-400 font-bold hover:underline" rel="noopener noreferrer">Zillow US ↗</a>
                     </div>
                 </div>
 
@@ -110,7 +111,7 @@
                     </div>
                     <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
                         <span class="text-slate-400">المصدر:</span>
-                        <a href="https://www.rightmove.co.uk" target="_blank" class="text-emerald-400 font-bold hover:underline">Rightmove & Bayut ↗</a>
+                        <a href="https://www.rightmove.co.uk" target="_blank" class="text-emerald-400 font-bold hover:underline" rel="noopener noreferrer">Rightmove & Bayut ↗</a>
                     </div>
                 </div>
 
@@ -127,7 +128,7 @@
                     </div>
                     <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
                         <span class="text-slate-400">المصدر:</span>
-                        <a href="https://www.propertyfinder.ae" target="_blank" class="text-emerald-400 font-bold hover:underline">Property Finder & Bayut ↗</a>
+                        <a href="https://www.propertyfinder.ae" target="_blank" class="text-emerald-400 font-bold hover:underline" rel="noopener noreferrer">Property Finder & Bayut ↗</a>
                     </div>
                 </div>
 
@@ -178,7 +179,7 @@
                     </div>
                     <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
                         <span class="text-slate-400">المصدر:</span>
-                        <a href="https://aqarmap.com.eg" target="_blank" class="text-emerald-400 font-bold hover:underline">Aqarmap & Nawy ↗</a>
+                        <a href="https://aqarmap.com.eg" target="_blank" class="text-emerald-400 font-bold hover:underline" rel="noopener noreferrer">Aqarmap & Nawy ↗</a>
                     </div>
                 </div>
             </div>
@@ -623,7 +624,7 @@
                                     <span class="text-xs text-slate-500">القيمة الأصلية: ${p.price.toLocaleString()} ${currencySymbols[p.currency]}</span>
                                 </div>
                                 ${cleanWa ? `
-                                    <a href="https://wa.me/${cleanWa}?text=مرحباً، أنا مهتم بعقارك (${encodeURIComponent(p.title)}) المعروض على منصة Aura Global AI" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-slate-950 px-4 py-2.5 rounded-xl font-bold text-xs flex items-center shadow-lg shadow-emerald-600/20 transition-all">
+                                    <a href="https://wa.me/${cleanWa}?text=مرحباً، أنا مهتم بعقارك (${encodeURIComponent(p.title)}) المعروض على منصة Aura Global AI" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-slate-950 px-4 py-2.5 rounded-xl font-bold text-xs flex items-center shadow-lg shadow-emerald-600/20 transition-all" rel="noopener noreferrer">
                                         <i class="fa-brands fa-whatsapp text-base ml-1.5"></i>تواصل واتساب
                                     </a>
                                 ` : ''}
@@ -669,31 +670,31 @@
                           `- متوسط سعر المتر: <b>د.إ 14,200</b>\n` +
                           `- العائد الاستثماري الصافي: <b>9.4% سنوياً</b>\n\n` +
                           `📌 <b>المصادر والروابط المعتمدة:</b>\n` +
-                          `• <a href="https://www.propertyfinder.ae" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Property Finder UAE ↗</a>\n` +
-                          `• <a href="https://www.bayut.com" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Bayut Dubai Market ↗</a>`;
+                          `• <a href="https://www.propertyfinder.ae" target="_blank" class="text-emerald-400 underline hover:text-emerald-300" rel="noopener noreferrer">Property Finder UAE ↗</a>\n` +
+                          `• <a href="https://www.bayut.com" target="_blank" class="text-emerald-400 underline hover:text-emerald-300" rel="noopener noreferrer">Bayut Dubai Market ↗</a>`;
                 } else if(lq.includes('مصر') || lq.includes('القاهرة') || lq.includes('التجمع') || lq.includes('زايد')) {
                     ans = `🏢 <b>تقرير السوق في مصر (التجمع وزايد):</b>\n` +
                           `- أشهر مشروع: Zed Towers / التجمع وزايد\n` +
                           `- متوسط سعر المتر: <b>ج.م 45,000</b>\n` +
                           `- عائد الإيجار الصافي: <b>11.5% سنوياً</b>\n\n` +
                           `📌 <b>المصادر والروابط المعتمدة:</b>\n` +
-                          `• <a href="https://aqarmap.com.eg" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Aqarmap Egypt Index ↗</a>\n` +
-                          `• <a href="https://nawy.com" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Nawy Properties ↗</a>\n` +
-                          `• <a href="https://www.propertyfinder.eg" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Property Finder Egypt ↗</a>`;
+                          `• <a href="https://aqarmap.com.eg" target="_blank" class="text-emerald-400 underline hover:text-emerald-300" rel="noopener noreferrer">Aqarmap Egypt Index ↗</a>\n` +
+                          `• <a href="https://nawy.com" target="_blank" class="text-emerald-400 underline hover:text-emerald-300" rel="noopener noreferrer">Nawy Properties ↗</a>\n` +
+                          `• <a href="https://www.propertyfinder.eg" target="_blank" class="text-emerald-400 underline hover:text-emerald-300" rel="noopener noreferrer">Property Finder Egypt ↗</a>`;
                 } else if(lq.includes('لندن') || lq.includes('بريطانيا')) {
                     ans = `🏢 <b>تقرير السوق في لندن:</b>\n` +
                           `- أشهر مشروع: Battersea Power Station\n` +
                           `- متوسط سعر المتر: <b>£7,900</b>\n` +
                           `- العائد الاستثماري الصافي: <b>6.5% سنوياً</b>\n\n` +
                           `📌 <b>المصادر والروابط المعتمدة:</b>\n` +
-                          `• <a href="https://www.rightmove.co.uk" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Rightmove & Bayut ↗</a>`;
+                          `• <a href="https://www.rightmove.co.uk" target="_blank" class="text-emerald-400 underline hover:text-emerald-300" rel="noopener noreferrer">Rightmove & Bayut ↗</a>`;
                 } else {
                     ans = `🔍 <b>نتيجة التحليل الشامل للمنطقة ("${q}"):</b>\n` +
                           `تم مطابقة البيانات مع مؤشرات السوق الحية للمشاريع الكبرى.\n\n` +
                           `📌 <b>المصادر المرجعية العامة:</b>\n` +
-                          `• <a href="https://aqarmap.com.eg" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Aqarmap</a> | ` +
-                          `<a href="https://www.propertyfinder.ae" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Property Finder</a> | ` +
-                          `<a href="https://www.zillow.com" target="_blank" class="text-emerald-400 underline hover:text-emerald-300">Zillow</a>`;
+                          `• <a href="https://aqarmap.com.eg" target="_blank" class="text-emerald-400 underline hover:text-emerald-300" rel="noopener noreferrer">Aqarmap</a> | ` +
+                          `<a href="https://www.propertyfinder.ae" target="_blank" class="text-emerald-400 underline hover:text-emerald-300" rel="noopener noreferrer">Property Finder</a> | ` +
+                          `<a href="https://www.zillow.com" target="_blank" class="text-emerald-400 underline hover:text-emerald-300" rel="noopener noreferrer">Zillow</a>`;
                 }
 
                 chat.innerHTML += `
